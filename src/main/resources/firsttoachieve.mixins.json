@@ -1,0 +1,14 @@
+{
+	"required": true,
+	"package": "com.decimo3.firsttoachieve.mixin",
+	"compatibilityLevel": "JAVA_17",
+	"mixins": [
+		"FirstToAchieveMixin"
+	],
+	"injectors": {
+		"defaultRequire": 1
+	},
+	"overwrites": {
+		"requireAnnotations": true
+	}
+}
