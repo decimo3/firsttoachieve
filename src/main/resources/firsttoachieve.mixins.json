@@ -3,7 +3,7 @@
 	"package": "com.decimo3.firsttoachieve.mixin",
 	"compatibilityLevel": "JAVA_17",
 	"mixins": [
-		"FirstToAchieveMixin"
+		"PlayerAdvancementTrackerMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1
