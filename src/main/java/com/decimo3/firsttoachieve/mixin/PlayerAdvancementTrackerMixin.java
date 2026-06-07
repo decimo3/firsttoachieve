@@ -67,6 +67,10 @@ public abstract class PlayerAdvancementTrackerMixin {
 			return;
 		}
 
+		if (advancement.getId().getPath().startsWith("recipes")) {
+			return;
+		}
+
 		ServerWorld world = owner.getServerWorld();
 
 		PlayerAdvancementState state = PlayerAdvancementState.get(world);
