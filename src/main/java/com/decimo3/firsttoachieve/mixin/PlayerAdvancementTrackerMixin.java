@@ -5,7 +5,6 @@ import net.minecraft.advancement.Advancement;
 import net.minecraft.advancement.PlayerAdvancementTracker;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
-import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -41,12 +40,6 @@ public abstract class PlayerAdvancementTrackerMixin {
 		String advancementId = id.toString();
 
 		if (state.isClaimed(advancementId)) {
-
-			owner.sendMessage(
-					Text.literal(
-							"Outro jogador já realizou essa conquista!"),
-					false);
-
 			cir.setReturnValue(false);
 		}
 	}
@@ -80,14 +73,6 @@ public abstract class PlayerAdvancementTrackerMixin {
 		if (!state.isClaimed(id)) {
 
 			state.claim(id);
-
-			owner.getServer().getPlayerManager()
-					.broadcast(
-							Text.literal(
-									owner.getName().getString()
-											+ " foi o primeiro a completar "
-											+ id),
-							false);
 		}
 	}
 }
