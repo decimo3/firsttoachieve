@@ -26,8 +26,7 @@ public abstract class PlayerAdvancementTrackerMixin {
 			String criterion,
 			CallbackInfoReturnable<Boolean> cir) {
 
-		if (advancement.getId().getPath().startsWith("recipes"))
-		{
+		if (advancement.getId().getPath().startsWith("recipes")) {
 			return;
 		}
 
