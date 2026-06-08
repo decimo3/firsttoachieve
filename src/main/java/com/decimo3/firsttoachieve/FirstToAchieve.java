@@ -2,6 +2,11 @@ package com.decimo3.firsttoachieve;
 
 import net.fabricmc.api.ModInitializer;
 
+import net.minecraft.server.command.CommandManager;
+import net.minecraft.server.world.ServerWorld;
+import net.minecraft.text.Text;
+import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -19,5 +24,25 @@ public class FirstToAchieve implements ModInitializer {
 	@Override
 	public void onInitialize() {
 		LOGGER.info("Hello Fabric world from FirstToAchieve Mod!");
+		CommandRegistrationCallback.EVENT.register(
+            (dispatcher, registryAccess, environment) -> {
+				dispatcher.register(
+					CommandManager.literal("firsttoachieve")
+						.executes(context -> {
+							ServerWorld world = context.getSource().getWorld();
+							PlayerAdvancementState state = PlayerAdvancementState.get(world);
+							if (state.getAdvancements().isEmpty()) {
+								context.getSource().sendFeedback(() -> Text.literal("Nenhuma conquista registrada."), false);
+								return 1;
+							}
+							context.getSource().sendFeedback(() -> Text.literal("Conquistas registradas:"), false);
+							for (String advancementId : state.getAdvancements()) {
+								context.getSource().sendFeedback(() -> Text.literal("- " + advancementId), false);
+							}
+							return 1;
+						}
+					)
+				);
+			});
 	}
 }
