@@ -11,47 +11,50 @@ import net.minecraft.world.PersistentState;
 
 public class PlayerAdvancementState extends PersistentState {
 
-    private final Set<String> claimedAdvancements = new HashSet<>();
+	private final Set<String> claimedAdvancements = new HashSet<>();
 
-    public static PlayerAdvancementState get(ServerWorld world) {
-        return world.getPersistentStateManager().getOrCreate(
-                PlayerAdvancementState::fromNbt,
-                PlayerAdvancementState::new,
+	public static PlayerAdvancementState get(ServerWorld world) {
+		return world.getPersistentStateManager().getOrCreate(
+				PlayerAdvancementState::fromNbt,
+				PlayerAdvancementState::new,
                 "first2achieve_advancements"
         );
-    }
+	}
 
 	@Override
 	public NbtCompound writeNbt(NbtCompound nbt) {
 		NbtList list = new NbtList();
 
-        for (String id : claimedAdvancements) {
-            list.add(NbtString.of(id));
-        }
+		for (String id : claimedAdvancements) {
+			list.add(NbtString.of(id));
+		}
 
-        nbt.put("claimed", list);
-        return nbt;
+		nbt.put("claimed", list);
+		return nbt;
 	}
 
-    public static PlayerAdvancementState fromNbt(NbtCompound nbt) {
-        PlayerAdvancementState state = new PlayerAdvancementState();
+	public static PlayerAdvancementState fromNbt(NbtCompound nbt) {
+		PlayerAdvancementState state = new PlayerAdvancementState();
 
-        NbtList list = nbt.getList("claimed", 8);
+		NbtList list = nbt.getList("claimed", 8);
 
-        for (int i = 0; i < list.size(); i++) {
-            state.claimedAdvancements.add(list.getString(i));
-        }
+		for (int i = 0; i < list.size(); i++) {
+			state.claimedAdvancements.add(list.getString(i));
+		}
 
-        return state;
-    }
+		return state;
+	}
 
-    public boolean isClaimed(String id) {
-        return claimedAdvancements.contains(id);
-    }
+	public boolean isClaimed(String id) {
+		return claimedAdvancements.contains(id);
+	}
 
-    public void claim(String id) {
-        claimedAdvancements.add(id);
-        markDirty();
-    }
+	public void claim(String id) {
+		claimedAdvancements.add(id);
+		markDirty();
+	}
 
+	public Set<String> getAdvancements() {
+		return claimedAdvancements;
+	}
 }
