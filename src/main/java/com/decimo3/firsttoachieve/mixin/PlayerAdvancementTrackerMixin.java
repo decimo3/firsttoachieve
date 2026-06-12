@@ -71,7 +71,7 @@ public abstract class PlayerAdvancementTrackerMixin {
 
 		if (!state.isClaimed(id)) {
 
-			state.claim(id);
+			state.claim(owner.getName().getString(), id);
 		}
 	}
 }
