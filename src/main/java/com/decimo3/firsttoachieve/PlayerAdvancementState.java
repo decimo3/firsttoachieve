@@ -16,7 +16,7 @@ public class PlayerAdvancementState extends PersistentState {
 	private final List<AdvancementRecord> records = new ArrayList<>();
 
 	public static PlayerAdvancementState get(ServerWorld world) {
-		return world.getPersistentStateManager().getOrCreate(
+		return world.getServer().getOverworld().getPersistentStateManager().getOrCreate(
 				PlayerAdvancementState::fromNbt,
 				PlayerAdvancementState::new,
 				FirstToAchieve.MOD_ID);
